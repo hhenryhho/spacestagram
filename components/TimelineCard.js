@@ -33,7 +33,12 @@ const TimelineCard = ({ post }) => {
           size='sm'
           name={post.copyright ? post.copyright : "Anonymous"}
         />
-        <Text px={3}>{post.copyright ? post.copyright : "Anonymous"}</Text>
+        <Flex px={3} flexDir='column'>
+          <Text>
+            <b>{post.copyright ? post.copyright : "Anonymous"}</b>
+          </Text>
+          <Text fontSize={["sm", "md"]}>{post.title}</Text>
+        </Flex>
       </Flex>
       <Box>
         <Image
@@ -77,7 +82,7 @@ const TimelineCard = ({ post }) => {
         <Flex>
           {isExpanded ? (
             <Flex flexDir='column'>
-              <Text>
+              <Text fontSize={["sm", "md"]}>
                 <b>{post.copyright ? post.copyright : "Anonymous"}</b>
                 {" " + post.explanation}
               </Text>
@@ -95,7 +100,7 @@ const TimelineCard = ({ post }) => {
             </Flex>
           ) : (
             <Flex w='100%' flexDir='row'>
-              <Text isTruncated>
+              <Text fontSize={["sm", "md"]} isTruncated>
                 <b>{post.copyright ? post.copyright : "Anonymous"}</b>
                 {" " + post.explanation}
               </Text>
@@ -106,7 +111,9 @@ const TimelineCard = ({ post }) => {
           )}
         </Flex>
         <Flex>
-          <Text py={1}>{daysAgo > 0 ? daysAgo + " days ago" : "Today"}</Text>
+          <Text fontSize={["sm", "md"]} py={1}>
+            {daysAgo > 0 ? daysAgo + " days ago" : "Today"}
+          </Text>
         </Flex>
       </Flex>
     </Box>
