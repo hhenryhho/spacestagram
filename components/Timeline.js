@@ -4,14 +4,12 @@ import { useState, useEffect } from "react";
 import TimelineCard from "./TimelineCard";
 
 const Timeline = ({ posts }) => {
-  const [timeline, setTimeline] = useState();
-
   return (
     <Container>
       <Stack>
-        <Heading py={10}>Spacestagram Posts</Heading>
+        <Heading py={10}>Spacestagram</Heading>
         <Stack spacing={10} flexDir='column'>
-          {posts.map((post, index) => (
+          {posts.reverse().map((post, index) => (
             <TimelineCard key={index} post={post}></TimelineCard>
           ))}
         </Stack>

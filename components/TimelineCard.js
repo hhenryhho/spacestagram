@@ -1,6 +1,6 @@
-import { Avatar, Box, Text, Flex, IconButton } from "@chakra-ui/react";
+import { Avatar, Box, Text, Flex, IconButton, Button } from "@chakra-ui/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import DateObject from "react-date-object";
 import {
   FaHeart,
@@ -17,10 +17,14 @@ const TimelineCard = ({ post }) => {
           "https://apod.nasa.gov/apod/image/2110/GS_20210917_Handol_5651_Pan1024.jpg",
       };
 
+  const correctedUrl = post.thumbnail_url ? post.thumbnail_url : post.url;
+
+  const [isExpanded, setExpand] = useState(false);
+  const [isLiked, setLike] = useState(false);
+
   var currentDateObj = new DateObject();
   var postDateObj = new DateObject(post.date.replace("-", "/"));
-
-  var daysAgo = 0;
+  var daysAgo = Math.floor((currentDateObj.unix - postDateObj.unix) / 86400);
 
   return (
     <Box maxW='lg' borderWidth='1px' borderRadius='md'>
@@ -33,24 +37,36 @@ const TimelineCard = ({ post }) => {
       </Flex>
       <Box>
         <Image
-          src={post.thumbnail_url ? post.thumbnail_url : post.url}
+          src={correctedUrl}
           alt={
             "This photo is owned by " + post.copyright
               ? post.copyright
               : "Anonymous"
           }
-          width='500px'
-          height='500px'
+          width='510px'
+          height='510px'
         />
       </Box>
       <Flex flexDir='column' px={4} pb={4}>
         <Flex>
-          <IconButton
-            aria-label='Like button'
-            fontSize='2xl'
-            icon={<FaRegHeart />}
-            variant='ghost'
-          />
+          {isLiked ? (
+            <IconButton
+              aria-label='Like button'
+              fontSize='2xl'
+              icon={<FaHeart />}
+              variant='ghost'
+              onClick={() => setLike(false)}
+            />
+          ) : (
+            <IconButton
+              aria-label='Like button'
+              fontSize='2xl'
+              icon={<FaRegHeart />}
+              variant='ghost'
+              onClick={() => setLike(true)}
+            />
+          )}
+
           <IconButton
             aria-label='Share button'
             fontSize='2xl'
@@ -59,10 +75,35 @@ const TimelineCard = ({ post }) => {
           />
         </Flex>
         <Flex>
-          <Text isTruncated>
-            <b>{post.copyright ? post.copyright : "Anonymous"}</b>
-            {" " + post.explanation}
-          </Text>
+          {isExpanded ? (
+            <Flex flexDir='column'>
+              <Text>
+                <b>{post.copyright ? post.copyright : "Anonymous"}</b>
+                {" " + post.explanation}
+              </Text>
+              <Button
+                w='40px'
+                pt={1}
+                pl={0}
+                pr={2}
+                h='20px'
+                variant='ghost'
+                onClick={() => setExpand(false)}
+              >
+                less
+              </Button>
+            </Flex>
+          ) : (
+            <Flex w='100%' flexDir='row'>
+              <Text isTruncated>
+                <b>{post.copyright ? post.copyright : "Anonymous"}</b>
+                {" " + post.explanation}
+              </Text>
+              <Button h='20px' variant='ghost' onClick={() => setExpand(true)}>
+                more
+              </Button>
+            </Flex>
+          )}
         </Flex>
         <Flex>
           <Text py={1}>{daysAgo > 0 ? daysAgo + " days ago" : "Today"}</Text>
