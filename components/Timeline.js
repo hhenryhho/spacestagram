@@ -11,8 +11,8 @@ const Timeline = ({ posts }) => {
       <Stack>
         <Heading py={10}>Spacestagram Posts</Heading>
         <Stack spacing={10} flexDir='column'>
-          {posts.map((post) => (
-            <TimelineCard post={post}></TimelineCard>
+          {posts.map((post, index) => (
+            <TimelineCard key={index} post={post}></TimelineCard>
           ))}
         </Stack>
       </Stack>

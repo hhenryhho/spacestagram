@@ -34,6 +34,11 @@ const TimelineCard = ({ post }) => {
       <Box>
         <Image
           src={post.thumbnail_url ? post.thumbnail_url : post.url}
+          alt={
+            "This photo is owned by " + post.copyright
+              ? post.copyright
+              : "Anonymous"
+          }
           width='500px'
           height='500px'
         />
