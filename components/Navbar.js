@@ -20,6 +20,7 @@ const Navbar = () => {
           objectFit='cover'
           boxSize={["60px", "75px"]}
           src='nasa.png'
+          alt='Nasa Logo'
         />
         <CloseIcon />
         <Image
@@ -27,6 +28,7 @@ const Navbar = () => {
           objectFit='cover'
           boxSize={["60px", "75px"]}
           src='shopify.png'
+          alt='Shopify Logo'
         />
       </Flex>
       <Flex pr={[50, 100]} align='center'>
