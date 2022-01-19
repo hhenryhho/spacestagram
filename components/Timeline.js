@@ -3,8 +3,7 @@ import { Heading, Container, Stack } from "@chakra-ui/react";
 import TimelineCard from "./TimelineCard";
 
 const Timeline = ({ posts }) => {
-  var reversed = posts.reverse();
-  console.log(reversed);
+  var reversed = posts;
   return (
     <Container>
       <Stack>
@@ -14,7 +13,7 @@ const Timeline = ({ posts }) => {
         <Stack spacing={10} flexDir='column'>
           {reversed.map((post, index) => (
             <TimelineCard key={index} post={post}>
-              {/* {console.log(post.copyright, index)} */}
+              {console.log(post.copyright, index)}
             </TimelineCard>
           ))}
         </Stack>
