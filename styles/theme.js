@@ -24,8 +24,8 @@ const overrides = {
     },
   },
   breakpoints: createBreakpoints({
-    sm: "62em",
-    md: "62em",
+    sm: "35em",
+    md: "35em",
     lg: "80em",
     xl: "80em",
   }),
