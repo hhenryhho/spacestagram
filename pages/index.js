@@ -1,12 +1,9 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { Flex } from "@chakra-ui/react";
 import Timeline from "../components/Timeline";
 import Navbar from "../components/Navbar";
 import "focus-visible/dist/focus-visible";
 import Footer from "../components/Footer";
-import { Spinner } from "@chakra-ui/react";
 
 export default function Home({ posts }) {
   return (

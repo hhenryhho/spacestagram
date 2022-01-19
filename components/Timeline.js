@@ -1,9 +1,16 @@
-import React from "react";
-import { Heading, Container, Stack } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Heading, Container, Stack, Spinner, Flex } from "@chakra-ui/react";
 import TimelineCard from "./TimelineCard";
 
 const Timeline = ({ posts }) => {
-  var reversed = posts;
+  const [reversed, setReversed] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      posts = posts.reverse();
+      setReversed(!reversed);
+    }, 1000);
+  }, [posts]);
+
   return (
     <Container>
       <Stack>
@@ -11,11 +18,13 @@ const Timeline = ({ posts }) => {
           Spacestagram
         </Heading>
         <Stack spacing={10} flexDir='column'>
-          {reversed.map((post, index) => (
-            <TimelineCard key={index} post={post}>
-              {console.log(post.copyright, index)}
-            </TimelineCard>
-          ))}
+          {reversed ? (
+            posts.map((post, index) => <TimelineCard key={index} post={post} />)
+          ) : (
+            <Flex align='center' justify='center' w='100%' h='50vh'>
+              <Spinner />
+            </Flex>
+          )}
         </Stack>
       </Stack>
     </Container>
