@@ -4,7 +4,7 @@ This project was created for the [Shopify Front End Developer Intern Challenge -
 
 ## Description
 
-This website shares photos from NASA’s Astronomy Picture of the Day API. The API is called
+This website shares photos from NASA’s Astronomy Picture of the Day API.
 
 ## Tech Stack
 
@@ -12,3 +12,7 @@ This website shares photos from NASA’s Astronomy Picture of the Day API. The A
 - Next JS (Used to help render efficiently)
 - Chakra UI (For styling components)
 - Vercel (For deploying)
+
+## Deployment
+
+This website is currently deployed using Vercel. [Link to deployed website](http://spacestagram-woad.vercel.app/)
