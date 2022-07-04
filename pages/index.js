@@ -1,13 +1,38 @@
 /** @format */
 
 import Head from 'next/head'
-import { Flex } from '@chakra-ui/react'
+import { Spinner, Flex } from '@chakra-ui/react'
 import Timeline from '../components/Timeline'
 import Navbar from '../components/Navbar'
 import 'focus-visible/dist/focus-visible'
 import Footer from '../components/Footer'
+import { useState, useEffect } from 'react'
 
-export default function Home({ posts }) {
+const fetchPosts = async () => {
+	try {
+		const link = 'https://api.nasa.gov/planetary/apod'
+		const res = await fetch(
+			link +
+				'?start_date=2022-05-01&thumbs=True&api_key=' +
+				(process.env.API_KEY || 'DEMO_KEY')
+		)
+		const posts = await res.json()
+		return {
+			props: { posts },
+		}
+	} catch (error) {
+		return { props: null }
+	}
+}
+
+export default function Home() {
+	const [posts, setPosts] = useState(null)
+
+	// grab all the pools from the API, and update state whenever refreshPools changes
+	useEffect(() => {
+		fetchPosts().then((posts) => setPosts(posts))
+	}, [])
+
 	return (
 		<Flex>
 			<Head>
@@ -20,28 +45,10 @@ export default function Home({ posts }) {
 			</Head>
 			<Flex flexDir='column' align='center' w='100%'>
 				<Timeline posts={posts} />
+
 				<Navbar />
 				<Footer></Footer>
 			</Flex>
 		</Flex>
 	)
-}
-
-// Make API calls and pre-render the page at build-time
-export async function getServerSideProps() {
-	try {
-		const link = 'https://api.nasa.gov/planetary/apod'
-		const res = await fetch(
-			link +
-				'?start_date=2022-05-01&thumbs=True&api_key=' +
-				(process.env.API_KEY || 'DEMO_KEY')
-		)
-		console.log(process.env.API_KEY || 'DEMO_KEY')
-		const posts = await res.json()
-		return {
-			props: { posts },
-		}
-	} catch (error) {
-		return { props: {} }
-	}
 }
