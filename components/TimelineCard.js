@@ -1,6 +1,7 @@
 /** @format */
 
 import {
+	/** @format */
 	Avatar,
 	Box,
 	Text,
@@ -16,7 +17,7 @@ import {
 	ModalCloseButton,
 	useDisclosure,
 	useClipboard,
-	Spinner,
+	AspectRatio,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -24,21 +25,18 @@ import DateObject from 'react-date-object'
 import { FaHeart, FaRegHeart, FaRegPaperPlane } from 'react-icons/fa'
 import FadeInSection from './FadeInSection'
 
-const TimelineCard = ({ post }) => {
+const TimelineCard = ({ post, onLike, onUnlike, isLiked }) => {
 	// For the more button
 	const [isExpanded, setExpand] = useState(false)
-
-	// To toggle the like button
-	const [isLiked, setLike] = useState(false)
 
 	// For the share button
 	const [value, _1] = useState(post.url)
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const { _2, onCopy } = useClipboard(value)
 
-	var currentDateObj = new DateObject()
-	var postDateObj = new DateObject(post.date.replace('-', '/'))
-	var daysAgo = Math.floor(
+	const currentDateObj = new DateObject()
+	const postDateObj = new DateObject(post.date.replace('-', '/'))
+	const daysAgo = Math.floor(
 		(currentDateObj.unix - postDateObj.unix) / 86400
 	)
 
@@ -81,29 +79,32 @@ const TimelineCard = ({ post }) => {
 							height='510px'
 						/>
 					) : (
-						<Spinner width='510px' height='510px' />
+						<AspectRatio ratio='1'>
+							<iframe src={post.url} alt='demo' />
+						</AspectRatio>
 					)}
 				</Box>
 				<Flex flexDir='column' px={4} pb={4}>
 					<Flex>
-						{isLiked ? (
-							<IconButton
-								aria-label='Like button'
-								fontSize='2xl'
-								icon={<FaHeart />}
-								variant='ghost'
-								onClick={() => setLike(false)}
-							/>
-						) : (
-							<IconButton
-								aria-label='Like button'
-								fontSize='2xl'
-								icon={<FaRegHeart />}
-								variant='ghost'
-								onClick={() => setLike(true)}
-							/>
-						)}
-
+						<IconButton
+							aria-label='Like button'
+							fontSize='2xl'
+							icon={
+								isLiked ? (
+									<FaHeart color='red' />
+								) : (
+									<FaRegHeart />
+								)
+							}
+							variant='ghost'
+							onClick={() => {
+								if (isLiked) {
+									onUnlike(post)
+								} else {
+									onLike(post)
+								}
+							}}
+						/>
 						<IconButton
 							aria-label='Share button'
 							fontSize='2xl'
