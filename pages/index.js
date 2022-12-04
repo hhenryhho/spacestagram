@@ -14,7 +14,7 @@ const fetchPosts = async () => {
 		const link = 'https://api.nasa.gov/planetary/apod'
 		const res = await fetch(
 			link +
-				'?start_date=2022-05-01&thumbs=True&api_key=' +
+				'?start_date=2022-10-01&thumbs=True&api_key=' +
 				(process.env.NEXT_PUBLIC_API_KEY || 'DEMO_KEY')
 		)
 		const posts = await res.json()
